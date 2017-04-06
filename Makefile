@@ -1,4 +1,5 @@
 # sxlock - simple X screen locker
+# 2017 Dominik Bauer
 # © 2013-2014 Jakub Klinkovský
 # Based on sflock
 # © 2010-2011 Ben Ruijl
@@ -6,11 +7,11 @@
 # © 2006-2008 Anselm R. Garbe, Sander van Dijk
 
 NAME = sxlock
-VERSION = 1.0
+VERSION = 1.1
 
 CC := $(CC) -std=c99
 
-base_CFLAGS = -Wall -Wextra -pedantic -O2 -g
+base_CFLAGS = -Wall -Wextra -pedantic -O2 
 base_LIBS = -lpam
 
 pkgs = x11 xext xrandr

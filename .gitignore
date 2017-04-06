@@ -1,2 +1,5 @@
 sxlock
 *.o
+GPATH
+GRTAGS
+GTAGS

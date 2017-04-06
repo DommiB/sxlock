@@ -1,6 +1,7 @@
 /*
  * MIT/X Consortium License
  *
+ *   2017 Dominik Bauer <dbauer at live dot de>
  * © 2013 Jakub Klinkovský <kuba.klinkovsky at gmail dot com>
  * © 2010-2011 Ben Ruijl
  * © 2006-2008 Anselm R Garbe <garbeam at gmail dot com>
@@ -157,7 +158,7 @@ main_loop(Window w, GC gc, XFontStruct* font, WindowPositionInfo* info, char pas
     Bool running = True;
     Bool sleepmode = False;
     Bool failed = False;
-
+    Bool caps = False; 
     XSync(dpy, False);
 
     /* define base coordinates - middle of screen */
@@ -186,6 +187,14 @@ main_loop(Window w, GC gc, XFontStruct* font, WindowPositionInfo* info, char pas
             int x;
             /* draw username and line */
             x = base_x - XTextWidth(font, username, strlen(username)) / 2;
+            
+            /* check state of capslock */ 
+            if(caps) {
+              XSetForeground(dpy, gc, red.pixel); 
+            } else {
+              XSetForeground(dpy, gc, white.pixel);
+            }
+              
             XDrawString(dpy, w, gc, x, base_y - 10, username, strlen(username));
             XDrawLine(dpy, w, gc, line_x_left, base_y, line_x_right, base_y);
 
@@ -238,6 +247,9 @@ main_loop(Window w, GC gc, XFontStruct* font, WindowPositionInfo* info, char pas
                 case XK_BackSpace:
                     if (len)
                         --len;
+                    break;
+                case XK_Caps_Lock:
+                    caps ^= True;
                     break;
                 default:
                     if (isprint(inputChar) && (len + sizeof(inputChar) < sizeof password)) {
@@ -314,7 +326,7 @@ main(int argc, char** argv) {
 
     /* set default values for command-line arguments */
     opt_passchar = "*";
-    opt_font = "-misc-fixed-medium-r-*--17-120-*-*-*-*-iso8859-1";
+    opt_font = "-misc-hack-medium-r-normal--0-0-0-0-m-0-iso8859-1"; 
     opt_username = username;
     opt_hidelength = False;
 
@@ -345,7 +357,7 @@ main(int argc, char** argv) {
 
     screen_num = DefaultScreen(dpy);
     root = DefaultRootWindow(dpy);
-
+  
     /* get display/output size and position */
     {
         XRRScreenResources* screen = NULL;
