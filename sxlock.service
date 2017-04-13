@@ -2,7 +2,7 @@
 Description=Lock X session using sxlock
 
 [Service]
-User=<username>
+User=bdk
 Environment=DISPLAY=:0
 ExecStart=/usr/bin/sxlock
 
